@@ -31,8 +31,15 @@ renderer.render(scene, camera);
 // Torus
 
 const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-const material = new THREE.MeshStandardMaterial({ color: 0xff6347 });
-const torus = new THREE.Mesh(geometry, material);
+const material = new THREE.MeshStandardMaterial({ color: 0x002bff });
+const gold = new THREE.MeshStandardMaterial({
+  emissive: 0x0,
+  color: 0xd4af37,
+  metalness: 1,
+  roughness: 0,
+});
+
+const torus = new THREE.Mesh(geometry, gold);
 
 scene.add(torus);
 
@@ -44,13 +51,16 @@ pointLight.position.set(5, 5, 5);
 const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight, ambientLight);
 
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1000);
+scene.add(directionalLight);
+
 // Helpers
 
-// const lightHelper = new THREE.PointLightHelper(pointLight)
-// const gridHelper = new THREE.GridHelper(200, 50);
-// scene.add(lightHelper, gridHelper)
+const lightHelper = new THREE.PointLightHelper(pointLight);
+const gridHelper = new THREE.GridHelper(200, 50);
+scene.add(lightHelper, gridHelper);
 
-// const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 
 function addStar() {
   const geometry = new THREE.SphereGeometry(0.25, 24, 24);
@@ -69,16 +79,16 @@ Array(200).fill().forEach(addStar);
 
 // Background
 
-const spaceTexture = new THREE.TextureLoader().load("space.jpg");
+const spaceTexture = new THREE.TextureLoader().load("banner-paul.png");
 scene.background = spaceTexture;
 
 // Avatar
 
-const jeffTexture = new THREE.TextureLoader().load("paul.png");
+const paulTexture = new THREE.TextureLoader().load("paul.png");
 
 const jeff = new THREE.Mesh(
   new THREE.BoxGeometry(3, 3, 3),
-  new THREE.MeshBasicMaterial({ map: jeffTexture })
+  new THREE.MeshBasicMaterial({ map: paulTexture })
 );
 
 scene.add(jeff);
